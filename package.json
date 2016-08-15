@@ -1,5 +1,5 @@
 {
-    "version": "0.0.1",
+    "version": "0.0.2",
     "devDependencies": {
         "connect": "^3.4.1",
         "gulp": "^3.9.1",
