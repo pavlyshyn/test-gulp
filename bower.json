@@ -1,7 +1,11 @@
 {
     "name": "js",
     "authors": [
-        "Roma Pavlyshyn <pavlyshyn.roma@gmail.com>"
+        {
+            "name": "Roma Pavlyshyn",
+            "homepage": "http://pavlyshyn.com",
+            "email": "roman@pavlyshyn.com"
+        }
     ],
     "description": "",
     "main": "",
