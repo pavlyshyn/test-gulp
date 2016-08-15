@@ -1,0 +1,16 @@
+{
+    "name": "js",
+    "authors": [
+        "Roma Pavlyshyn <pavlyshyn.roma@gmail.com>"
+    ],
+    "description": "",
+    "main": "",
+    "moduleType": [],
+    "license": "MIT",
+    "homepage": "",
+    "dependencies": {
+        "bootstrap-sass": "^3.3.4",
+        "jquery": "^2.1.4",
+        "font-awesome": "4.6.3"
+    }
+}

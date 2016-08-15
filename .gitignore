@@ -1,0 +1,7 @@
+
+nbproject/
+node_modules/
+bower_components/
+web/fonts/
+web/css/
+web/js/
