@@ -2,9 +2,13 @@
     "name": "js",
     "version": "0.0.2",
     "authors": [
-        "Roma Pavlyshyn <pavlyshyn.roma@gmail.com>"
+        {
+            "name": "Roma Pavlyshyn",
+            "homepage": "http://pavlyshyn.com",
+            "email": "roman@pavlyshyn.com"
+        }
     ],
-    "description": "",
+    "description": "Setting up: Gulp, Bower, jQuery, Bootstrap Sass, FontAwesome",
     "main": "",
     "moduleType": [],
     "license": "MIT",
