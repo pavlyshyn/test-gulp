@@ -4,7 +4,9 @@ var gulp = require('gulp'),
         concat = require('gulp-concat'),
         uglify = require('gulp-uglify'),
         inject = require('gulp-inject'),
-        watch = require('gulp-watch');
+        watch = require('gulp-watch'),
+        requirejsOptimize = require('gulp-requirejs-optimize');
+
 
 
 var package = require('./package.json');
@@ -29,7 +31,7 @@ gulp.task('icons', function () {
 gulp.task('styles', function () {
     return gulp.src('./resources/sass/main.scss')
             .pipe(sass({outputStyle: 'compressed'}))
-            .pipe(concat('css/main.css?'+package.version))
+            .pipe(concat('css/main.css?' + package.version))
             .pipe(gulp.dest('./public'));
 });
 
@@ -41,7 +43,7 @@ gulp.task('scripts', function () {
         './resources/js/*.js',
         './resources/js/**/*.js'
     ])
-            .pipe(concat('js/main.js?'+package.version))
+            .pipe(concat('js/main.js?' + package.version))
             .pipe(uglify())
             .pipe(gulp.dest('./public'));
 });
@@ -49,8 +51,8 @@ gulp.task('scripts', function () {
 
 gulp.task('html', ['styles'], function () {
     var injectFiles = gulp.src([
-        'public/css/main.css?'+package.version,
-        'public/js/main.js?'+package.version
+        'public/css/main.css?' + package.version,
+        'public/js/main.js?' + package.version
     ]);
 
 
