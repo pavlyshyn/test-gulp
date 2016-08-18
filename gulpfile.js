@@ -5,11 +5,13 @@ var gulp = require('gulp'),
         uglify = require('gulp-uglify'),
         inject = require('gulp-inject'),
         watch = require('gulp-watch'),
+        template = require('gulp-template-compile'),
+        rimraf = require('gulp-rimraf'),
         requirejsOptimize = require('gulp-requirejs-optimize');
 
-
-
-var package = require('./package.json');
+var package = require('./package.json'),
+        resourcesDir = 'resources',
+        publicDir = 'public';
 
 var config = {
     sassPath: './resources/sass',
@@ -31,7 +33,7 @@ gulp.task('icons', function () {
 gulp.task('styles', function () {
     return gulp.src('./resources/sass/main.scss')
             .pipe(sass({outputStyle: 'compressed'}))
-            .pipe(concat('css/main.css?' + package.version))
+            .pipe(concat('css/main.css'))
             .pipe(gulp.dest('./public'));
 });
 
@@ -43,7 +45,7 @@ gulp.task('scripts', function () {
         './resources/js/*.js',
         './resources/js/**/*.js'
     ])
-            .pipe(concat('js/main.js?' + package.version))
+            .pipe(concat('js/main.js'))
             .pipe(uglify())
             .pipe(gulp.dest('./public'));
 });

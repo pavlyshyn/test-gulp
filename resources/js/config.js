@@ -4,14 +4,14 @@ require.config({
     ],
     paths: {
         backbone: 'bower_components/backbone/backbone',
-        jquery: 'bower_components/jquery/dist/jquery',
+        jQuery: 'bower_components/jquery/dist/jquery',
         underscore: 'bower_components/underscore/underscore',
         marionette: 'bower_components/marionette/lib/backbone.marionette',
         app: 'app'
     },
     shim: {
         Backbone: {
-            deps: ['underscore', 'jquery'],
+            deps: ['underscore', 'jQuery'],
             exports: 'backbone'
         },
         Marionette: {
