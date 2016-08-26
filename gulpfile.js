@@ -7,6 +7,7 @@ var gulp = require('gulp'),
         watch = require('gulp-watch'),
         template = require('gulp-template-compile'),
         rimraf = require('gulp-rimraf'),
+        clean = require('gulp-clean'),
         requirejsOptimize = require('gulp-requirejs-optimize');
 
 var package = require('./package.json'),
@@ -14,8 +15,10 @@ var package = require('./package.json'),
         publicDir = 'public';
 
 var config = {
-    sassPath: './resources/sass',
-    bowerDir: './bower_components'
+    sassPath: 'sass',
+    bowerDir: './bower_components',
+    resourcesDir: './resources/',
+    publicDir: './public/'
 };
 
 
@@ -27,35 +30,48 @@ gulp.task('bower', function () {
 
 gulp.task('icons', function () {
     return gulp.src(config.bowerDir + '/font-awesome/fonts/**.*')
-            .pipe(gulp.dest('./public/fonts'));
+            .pipe(gulp.dest(config.publicDir + 'fonts'));
 });
 
-gulp.task('styles', function () {
-    return gulp.src('./resources/sass/main.scss')
+gulp.task('styles', ['clean'], function () {
+    return gulp.src(config.resourcesDir + 'sass/main.scss')
             .pipe(sass({outputStyle: 'compressed'}))
-            .pipe(concat('css/main.css'))
+            .pipe(concat('css/main-' + package.version + '.min.css'))
             .pipe(gulp.dest('./public'));
 });
 
 
-gulp.task('scripts', function () {
+gulp.task('scripts', ['clean'], function () {
     return gulp.src([
         config.bowerDir + '/jquery/dist/jquery.js',
         config.bowerDir + '/bootstrap-sass/assets/javascripts/bootstrap.js',
-        './resources/js/*.js',
-        './resources/js/**/*.js'
+        config.resourcesDir + 'js/*.js',
+        config.resourcesDir + 'js/**/*.js'
     ])
-            .pipe(concat('js/main.js'))
+            .pipe(concat('js/main-' + package.version + '.min.js'))
             .pipe(uglify())
-            .pipe(gulp.dest('./public'));
+            .pipe(gulp.dest(publicDir));
 });
 
+gulp.task('clean', function () {
+    return gulp.src([
+        config.publicDir + 'css/*.css',
+        config.publicDir + 'js/*.js',
+        //clear fonts
+        config.publicDir + 'fonts/*.otf',
+        config.publicDir + 'fonts/*.eot',
+        config.publicDir + 'fonts/*.ttf',
+        config.publicDir + 'fonts/*.woff',
+        config.publicDir + 'fonts/*.woff2',
+        config.publicDir + 'fonts/*.svg'
+    ], {read: false}).pipe(clean());
+});
 
-gulp.task('html', ['styles'], function () {
+gulp.task('html', ['scripts', 'styles'], function () {
     var injectFiles = gulp.src([
-        'public/css/main.css?' + package.version,
-        'public/js/main.js?' + package.version
-    ]);
+        config.publicDir + 'css/main-' + package.version + '.min.css',
+        config.publicDir + 'js/main-' + package.version + '.min.js'
+    ], {read: false});
 
 
     var injectOptions = {
@@ -71,9 +87,9 @@ gulp.task('html', ['styles'], function () {
 
 
 gulp.task('watch', function () {
-    gulp.watch('./resources/js/*', ['scripts', 'html']);
-    gulp.watch('./resources/sass/*', ['styles', 'html']);
+    gulp.watch(config.resourcesDir + 'js/*', ['scripts', 'html']);
+    gulp.watch(config.resourcesDir + 'sass/*', ['styles', 'html']);
 });
 
 
-gulp.task('default', ['bower', 'icons', 'scripts', 'styles', 'html']);
+gulp.task('default', ['bower', 'icons', 'clean', 'scripts', 'styles', 'html']);
